@@ -1,30 +1,23 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
-import os
-
 def main():
-    # Gather inputs
-    title = input("Please enter the title: ")
-   
-    while not title.strip():
-        print("Title cannot be empty. Please enter again.")
+    while True:  # start of loop
+        # Gather inputs
         title = input("Please enter the title: ")
 
-    url = input("Please enter the URL: ")
-   
-    keywords = []
-    while True:
-        keyword = input("Enter a keyword (leave blank to finish): ")
-        if not keyword:
-            break
-        keywords.append(f"[[{keyword}]]")
+        while not title.strip():
+            print("Title cannot be empty. Please enter again.")
+            title = input("Please enter the title: ")
 
-    # Create the .md content
-    content = f"""
+        url = input("Please enter the URL: ")
+
+        keywords = []
+        while True:
+            keyword = input("Enter a keyword (leave blank to finish): ")
+            if not keyword:
+                break
+            keywords.append(f"[[{keyword}]]")
+
+        # Create the .md content
+        content = f"""
 {title}
 
 {url}
@@ -32,31 +25,29 @@ def main():
 {" ".join(keywords)}
 """
 
-    # Path where to save the file
-    base_path = "/Users/braydennoh/Documents/paper"
-    sanitized_title = title.replace(" ", "_").replace("/", "_")
-   
-    # Truncate the filename if it's too long
-    max_filename_length = 200  # This can be adjusted
-    if len(sanitized_title) > max_filename_length:
-        sanitized_title = sanitized_title[:max_filename_length]
+        # Path where to save the file
+        base_path = "/Users/braydennoh/Documents/paper"
+        sanitized_title = title.replace(" ", "_").replace("/", "_")
 
-    filename = sanitized_title + ".md"
-    save_path = os.path.join(base_path, filename)
-   
-    try:
-        with open(save_path, 'w') as file:
-            file.write(content)
-        print(f"File saved successfully at {save_path}")
-    except Exception as e:
-        print(f"An error occurred while saving the file: {e}")
+        # Truncate the filename if it's too long
+        max_filename_length = 200  # This can be adjusted
+        if len(sanitized_title) > max_filename_length:
+            sanitized_title = sanitized_title[:max_filename_length]
+
+        filename = sanitized_title + ".md"
+        save_path = os.path.join(base_path, filename)
+
+        try:
+            with open(save_path, 'w') as file:
+                file.write(content)
+            print(f"File saved successfully at {save_path}")
+        except Exception as e:
+            print(f"An error occurred while saving the file: {e}")
+
+        # Check if the user wants to continue
+        cont = input("Do you want to add another? (yes or no): ").lower()
+        if cont != 'yes':
+            break  # break the loop if the answer is not 'yes'
 
 if __name__ == "__main__":
     main()
-
-
-# In[ ]:
-
-
-
-
